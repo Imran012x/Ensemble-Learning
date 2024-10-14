@@ -39,7 +39,7 @@ estimators = st.sidebar.selectbox(
     ('Decision Tree', 'KNN', 'SVM')
 )
 
-n_estimators = int(st.sidebar.number_input('Enter number of estimators'))
+n_estimators = int(st.sidebar.number_input('Enter number of estimators', min_value=1, value=10))  # Ensure min_value is 1
 max_samples = st.sidebar.slider('Max Samples', 0, 375, 375, step=25)
 
 bootstrap_samples = st.sidebar.radio(
@@ -74,8 +74,9 @@ if st.sidebar.button('Run Algorithm'):
     clf.fit(X_train, y_train)
     y_pred_tree = clf.predict(X_test)
 
+    # Update the BaggingClassifier initialization
     bag_clf = BaggingClassifier(
-        base_estimator=clf,
+        estimator=clf,  # Change here
         n_estimators=n_estimators,
         max_samples=max_samples,
         bootstrap=bootstrap_samples == 'True',
