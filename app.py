@@ -18,14 +18,19 @@ def draw_meshgrid():
     b = np.arange(start=X[:, 1].min() - 1, stop=X[:, 1].max() + 1, step=0.01)
 
     XX, YY = np.meshgrid(a, b)
-
     input_array = np.array([XX.ravel(), YY.ravel()]).T
 
     return XX, YY, input_array
 
 # Check and set an available style
-st.write("Available styles:", plt.style.available)
-plt.style.use('seaborn')  # Use an available style
+available_styles = plt.style.available
+st.write("Available styles:", available_styles)
+
+# Use 'seaborn' if available, otherwise use 'ggplot' or another style
+if 'seaborn' in available_styles:
+    plt.style.use('seaborn')
+else:
+    plt.style.use('ggplot')  # Fallback style
 
 st.sidebar.markdown("# Bagging Classifier")
 
